@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bug Detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Bug Details</h1>
+    <a href="/">Back to Bug List</a>
+    <hr>
+    {% if bug %}
+        <div>
+            <h3>{{ bug.title }}</h3>
+            <p><strong>Description:</strong> {{ bug.description }}</p>
+            <p><strong>Status:</strong> {{ bug.status }}</p>
+            <p><strong>Priority:</strong> {{ bug.priority }}</p>
+            <p><strong>Created:</strong> {{ bug.created_at }}</p>
+        </div>
+        <p>
+            <a href="/edit_bug/{{ bug.id }}">Edit Bug</a> |
+            <a href="/delete_bug/{{ bug.id }}">Delete Bug</a>
+        </p>
+    {% else %}
+        <h2>Bug not found.</h2>
+    {% endif %}
+
+</body>
+</html>
