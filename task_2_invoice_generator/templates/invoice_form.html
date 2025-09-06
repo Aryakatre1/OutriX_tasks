@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Generator</title>
+<script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script>
+<style>
+body {
+font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+</style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
+<h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Invoice Generator</h1>
+<form id="invoice-form" action="/generate_invoice" method="post">
+
+        <div class="space-y-6 mb-8">
+            <div>
+                <label for="invoiceNumber" class="block text-sm font-medium text-gray-700">Invoice Number</label>
+                <input type="text" id="invoiceNumber" name="invoice_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+            </div>
+            <div>
+                <label for="billTo" class="block text-sm font-medium text-gray-700">Bill To</label>
+                <textarea id="billTo" name="bill_to" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required></textarea>
+            </div>
+            <div>
+                <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                <input type="date" id="date" name="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+            </div>
+            <div>
+                <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
+                <select id="currency" name="currency" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                    <option value="INR">Indian Rupee (₹)</option>
+                    <option value="USD">US Dollar ($)</option>
+                </select>
+            </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Items</h2>
+        <div id="items-container" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 item-row">
+                <div class="md:col-span-2">
+                    <label for="item-0-description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <input type="text" id="item-0-description" name="item_description[]" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+                </div>
+                <div>
+                    <label for="item-0-quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                    <input type="number" id="item-0-quantity" name="item_quantity[]" min="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+                </div>
+                <div>
+                    <label for="item-0-price" class="block text-sm font-medium text-gray-700">Price</label>
+                    <input type="number" id="item-0-price" name="item_price[]" min="0" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button type="button" id="addItemBtn" class="bg-indigo-500 text-white py-1 px-3 rounded-md text-sm hover:bg-indigo-600 transition-colors">Add Item</button>
+        </div>
+
+        <div class="flex justify-end items-center mt-6">
+            <button type="submit" class="bg-green-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-green-700 transition-colors">
+                Generate Invoice
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('addItemBtn').addEventListener('click', () => {
+        const container = document.getElementById('items-container');
+        const itemCount = container.querySelectorAll('.item-row').length;
+        const newItemRow = `
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 item-row">
+                <div class="md:col-span-2">
+                    <label for="item-${itemCount}-description" class="block text-sm font-medium text-gray-700 sr-only">Description</label>
+                    <input type="text" id="item-${itemCount}-description" name="item_description[]" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+                </div>
+                <div>
+                    <label for="item-${itemCount}-quantity" class="block text-sm font-medium text-gray-700 sr-only">Quantity</label>
+                    <input type="number" id="item-${itemCount}-quantity" name="item_quantity[]" min="1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+                </div>
+                <div>
+                    <label for="item-${itemCount}-price" class="block text-sm font-medium text-gray-700 sr-only">Price</label>
+                    <input type="number" id="item-${itemCount}-price" name="item_price[]" min="0" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2" required>
+                </div>
+                <button type="button" class="remove-item-btn text-red-500 hover:text-red-700 font-medium">Remove</button>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', newItemRow);
+    });
+
+    document.getElementById('items-container').addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-item-btn')) {
+            e.target.closest('.item-row').remove();
+        }
+    });
+</script>
+
+</body>
+</html>
