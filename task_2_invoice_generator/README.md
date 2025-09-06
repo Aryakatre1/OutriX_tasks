@@ -1,4 +1,5 @@
 Invoice Generator
+
 This is a Python-based web application built with Flask that generates professional PDF invoices. Users can input invoice details, item descriptions, quantities, and prices, and the application will create a clean, printable PDF with calculated totals.
 
 A key feature of this application is its ability to correctly render both the US Dollar ($) and Indian Rupee (₹) symbols in the generated PDF, which was achieved by using a Unicode-compatible font.
