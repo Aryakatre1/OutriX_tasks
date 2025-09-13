@@ -1,0 +1,59 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Employee</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-xl">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Edit Employee</h1>
+        
+        <form action="{{ url_for('update_employee', employee_id=employee['employee_id']) }}" method="post" class="space-y-6">
+            <div>
+                <label for="full_name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <input type="text" id="full_name" name="full_name" value="{{ employee['full_name'] }}" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+            </div>
+            <div>
+                <label for="position" class="block text-sm font-medium text-gray-700">Position</label>
+                <input type="text" id="position" name="position" value="{{ employee['position'] }}" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+            </div>
+            <div>
+                <label for="monthly_salary" class="block text-sm font-medium text-gray-700">Monthly Salary</label>
+                <input type="number" id="monthly_salary" name="monthly_salary" value="{{ employee['monthly_salary'] }}" min="0" step="0.01" required
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+            </div>
+            <div>
+                <label for="bonuses" class="block text-sm font-medium text-gray-700">Bonuses</label>
+                <input type="number" id="bonuses" name="bonuses" value="{{ employee['bonuses'] }}" min="0" step="0.01"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+            </div>
+            <div>
+                <label for="tax_rate" class="block text-sm font-medium text-gray-700">Tax Rate (%)</label>
+                <input type="number" id="tax_rate" name="tax_rate" value="{{ employee['tax_rate'] }}" min="0" max="100" step="0.01"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+            </div>
+            <div>
+                <label for="deductions" class="block text-sm font-medium text-gray-700">Deductions</label>
+                <input type="number" id="deductions" name="deductions" value="{{ employee['deductions'] }}" min="0" step="0.01"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+            </div>
+            
+            <div class="flex justify-between items-center mt-6">
+                <a href="{{ url_for('view_employees') }}" class="inline-block bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition-colors">
+                    Cancel
+                </a>
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-colors">
+                    Update Employee
+                </button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

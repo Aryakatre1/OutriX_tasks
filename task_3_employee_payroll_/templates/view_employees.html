@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Employees</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-6xl">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">All Employees</h1>
+        
+        <!-- Search Form -->
+        <div class="mb-6">
+            <form action="{{ url_for('view_employees') }}" method="get" class="flex justify-center items-center space-x-2">
+                <input type="search" name="query" placeholder="Search by name..." value="{{ search_query }}"
+                       class="w-full sm:w-80 p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                    Search
+                </button>
+            </form>
+        </div>
+
+        <div class="table-container mb-8">
+            <table class="min-w-full bg-white rounded-md overflow-hidden">
+                <thead class="bg-indigo-600 text-white">
+                    <tr>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm rounded-tl-md">ID</th>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Position</th>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Monthly Salary</th>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Bonuses</th>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Tax Rate</th>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Deductions</th>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm">Net Salary</th>
+                        <th class="py-3 px-4 uppercase font-semibold text-sm rounded-tr-md">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                    {% for employee in employees %}
+                    <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                        <td class="py-4 px-4">{{ employee['employee_id'] }}</td>
+                        <td class="py-4 px-4">{{ employee['full_name'] }}</td>
+                        <td class="py-4 px-4">{{ employee['position'] }}</td>
+                        <td class="py-4 px-4">₹{{ "%.2f"|format(employee['monthly_salary']) }}</td>
+                        <td class="py-4 px-4">₹{{ "%.2f"|format(employee['bonuses']) }}</td>
+                        <td class="py-4 px-4">{{ "%.2f"|format(employee['tax_rate']) }}%</td>
+                        <td class="py-4 px-4">₹{{ "%.2f"|format(employee['deductions']) }}</td>
+                        <td class="py-4 px-4 font-bold text-green-600">₹{{ "%.2f"|format(employee['net_salary']) }}</td>
+                        <td class="py-4 px-4">
+                            <a href="{{ url_for('edit_employee', employee_id=employee['employee_id']) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded text-xs transition-colors">Edit</a>
+                            <a href="{{ url_for('delete_employee', employee_id=employee['employee_id']) }}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded text-xs transition-colors" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-colors transform hover:scale-105">
+            Add Another Employee
+        </a>
+    </div>
+
+</body>
+</html>
+
+
+
