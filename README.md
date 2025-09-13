@@ -1,10 +1,7 @@
-# Task 1: Bug Tracker
+OutriX Tasks
+This repository contains my completed tasks for the OutriX internship program. Each folder represents a separate project, demonstrating skills in full-stack development, database management, and automation.
 
-This repository contains my solution for Task 1 of the OutriX internship.
-
-The project is a simple bug-tracking system built with Python and Flask.
-
-Simple Bug Tracker
+1. Simple Bug Tracker
 A Simple Web-Based Bug Tracking System
 This project is a basic, single-user bug tracking system built as a web application. It allows a user to log new bugs, view a list of all existing bugs, and update the status of each bug. The application is designed to be lightweight and easy to set up for personal use or a small-scale project.
 
@@ -22,47 +19,31 @@ View All Bugs: A dashboard that displays a list of all reported bugs.
 
 Update Bug Status: An option to change the status of a bug (e.g., from Open to In Progress or Closed).
 
-Project Structure
-.
-├── app.py          # Main Flask application file
-├── static/
-│   └── css/
-│       └── style.css   # Styles for the web pages
-├── templates/
-│   ├── add_bug.html    # Page to add a new bug
-│   ├── bug_detail.html # Page to view bug details
-│   ├── edit_bug.html   # Page to edit a bug
-│   ├── home.html       # The main dashboard
-│   ├── login.html      # Login page
-│   └── register.html   # Registration page
-└── README.md
+2. Invoice Generator
+A PDF Invoice Generator
+This is a Python-based web application built with Flask that generates professional PDF invoices. Users can input invoice details, item descriptions, quantities, and prices, and the application will create a clean, printable PDF with calculated totals.
 
-Setup and Installation
-Prerequisites: Ensure you have Python 3 and MySQL installed on your system.
+A key feature of this application is its ability to correctly render both the US Dollar ($) and Indian Rupee (₹) symbols in the generated PDF, which was achieved by using a Unicode-compatible font.
 
-Install Python Libraries: Open your terminal or command prompt, navigate to the project directory, and install the required libraries using pip:
+Technologies Used
+Backend: Python with Flask
 
-pip install Flask mysql-connector-python
+PDF Generation: reportlab library
 
-Database Configuration:
+3. Employee Payroll Management System
+A Web-Based Payroll Automation System
+This project is a simple yet robust web-based application designed to manage employee payroll for a small organization. Developed as a task for OutriX, the system automates the process of calculating net salaries and provides a clean, searchable interface for all employee data.
 
-Create a MySQL database named bugtracker.
+Technologies Used
+Backend: Python with the Flask framework
 
-Create a table named bugs with the following columns:
+Database: SQLite
 
-CREATE TABLE bugs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    status VARCHAR(50)
-);
+Key Features
+Employee Management: Add, edit, and delete employee records with ease.
 
-Open app.py and update the database connection details (host, user, password, and database name) to match your MySQL setup.
+Automated Salary Calculation: The system automatically calculates the net salary for each employee based on their monthly salary, bonuses, tax rate, and other deductions.
 
-Run the Application:
+Dynamic Search: Instantly filter the employee list by name to quickly find specific records.
 
-From your terminal, run the app.py file:
-
-python app.py
-
-Access the Application: Open your web browser and navigate to http://127.0.0.1:5000 to use the bug tracker.
+Simple Interface: A clean and intuitive user interface built with HTML and CSS.
